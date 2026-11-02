@@ -193,3 +193,101 @@ footer{display:flex;justify-content:space-between;padding:16px 42px;border-top:2
 .shell.theme-dark .api-state,.shell.theme-dark .theme-toggle{font-size:10px}
 .shell.theme-light .metric>small,.shell.theme-light .panel-head p,.shell.theme-light .hero p,
 .shell.theme-light .page-heading p,.shell.theme-light .package-cell span{font-size:11px}
+
+
+/* Final legibility pass: brighter neutral text, larger metadata, disciplined lime accents */
+.shell.theme-dark{
+ --ink:#f4f7f2;--muted:#d0d8d4;--line:#4b585d;
+}
+.shell.theme-dark .brand small,.shell.theme-dark .workspace small,.shell.theme-dark .user-card small,
+.shell.theme-dark .panel-head p,.shell.theme-dark .hero p,.shell.theme-dark .page-heading p,
+.shell.theme-dark .assistant>p,.shell.theme-dark .metric>span,.shell.theme-dark .metric>small,
+.shell.theme-dark .report-card p,.shell.theme-dark .info-card p,.shell.theme-dark .project-card>p,
+.shell.theme-dark .project-stats small,.shell.theme-dark .history-info small,
+.shell.theme-dark .assistant-panel small,.shell.theme-dark .detail section>p,
+.shell.theme-dark .disclaimer,.shell.theme-dark .modal-head p,.shell.theme-dark .safe-note,
+.shell.theme-dark .package-cell span,.shell.theme-dark .package-cell b small,
+.shell.theme-dark .detail-meta small,.shell.theme-dark .package-version,
+.shell.theme-dark .detail-severity>span,.shell.theme-dark .table-foot,
+.shell.theme-dark .crumb,.shell.theme-dark footer,.shell.theme-dark .bar-col small,
+.shell.theme-dark .mono{color:#d0d8d4}
+.shell.theme-dark .nav-group>p,.shell.theme-dark .panel-head small,
+.shell.theme-dark .section-head>div>small,.shell.theme-dark .modal-head small,
+.shell.theme-dark .detail-top small,.shell.theme-dark .detail section>small,
+.shell.theme-dark .scan-modal label,.shell.theme-dark .status-control,
+.shell.theme-dark .detail-meta small,.shell.theme-dark .eyebrow{
+ color:#c8f169
+}
+.shell.theme-dark .topbar .crumb b,.shell.theme-dark .brand b,
+.shell.theme-dark .workspace b,.shell.theme-dark .user-card b,
+.shell.theme-dark .panel-head h3,.shell.theme-dark .section-head h3,
+.shell.theme-dark .project-card h3,.shell.theme-dark .history-info b,
+.shell.theme-dark .package-cell b,.shell.theme-dark .detail h2,
+.shell.theme-dark .modal-head h2,.shell.theme-dark .hero h1,
+.shell.theme-dark .page-heading h1,.shell.theme-dark .assistant h1{color:#f4f7f2}
+.shell.theme-dark .metric>small,.shell.theme-dark .metric>span{color:#e0e8df}
+.shell.theme-dark .report-card p,.shell.theme-dark .info-card p{color:#d0d8d4}
+.shell.theme-dark .package-cell span,.shell.theme-dark .history-info small,
+.shell.theme-dark .project-card>p,.shell.theme-dark .panel-head p,
+.shell.theme-dark .hero p,.shell.theme-dark .page-heading p,
+.shell.theme-dark .assistant>p,.shell.theme-dark .detail section>p,
+.shell.theme-dark .disclaimer,.shell.theme-dark .assistant-panel small{font-size:12px;line-height:1.55}
+.shell.theme-dark .brand small,.shell.theme-dark .workspace small,
+.shell.theme-dark .user-card small,.shell.theme-dark .nav-group>p,
+.shell.theme-dark .eyebrow,.shell.theme-dark .panel-head small,
+.shell.theme-dark .section-head>div>small,.shell.theme-dark th,
+.shell.theme-dark .table-foot,.shell.theme-dark footer,
+.shell.theme-dark .severity,.shell.theme-dark .api-state,
+.shell.theme-dark .theme-toggle,.shell.theme-dark .status,
+.shell.theme-dark .project-top>span{font-size:10px}
+.shell.theme-dark td,.shell.theme-dark .mono,.shell.theme-dark .package-cell b,
+.shell.theme-dark .history-info b,.shell.theme-dark .project-stats b{font-size:12px}
+.shell.theme-dark .nav-link{font-size:13px;color:#e0e8e4}
+.shell.theme-dark .nav-link.active{color:#11170b}
+.shell.theme-dark .metric{border-color:#58656a}
+.shell.theme-dark .panel,.shell.theme-dark .workspace,.shell.theme-dark .searchbox,
+.shell.theme-dark .toolbar select,.shell.theme-dark .soft-button,
+.shell.theme-dark .assistant-panel button,.shell.theme-dark .icon-btn,
+.shell.theme-dark .theme-toggle{border-color:#647176}
+.shell.theme-dark .section-head h3 span,.shell.theme-dark .nav-count,
+.shell.theme-dark .tag,.shell.theme-dark .sdg-badges span{background:#c8f169;color:#11170b}
+.shell.theme-dark .text-link{color:#c8f169}
+.shell.theme-dark .api-state.demo,.shell.theme-dark .api-state.connecting{color:#e8eee9}
+.shell.theme-light{
+ --ink:#171b1d;--muted:#454f52;--line:#737d7f;
+}
+.shell.theme-light .brand small,.shell.theme-light .workspace small,
+.shell.theme-light .user-card small,.shell.theme-light .panel-head p,
+.shell.theme-light .hero p,.shell.theme-light .page-heading p,
+.shell.theme-light .assistant>p,.shell.theme-light .metric>small,
+.shell.theme-light .metric>span,.shell.theme-light .report-card p,
+.shell.theme-light .info-card p,.shell.theme-light .project-card>p,
+.shell.theme-light .project-stats small,.shell.theme-light .history-info small,
+.shell.theme-light .assistant-panel small,.shell.theme-light .detail section>p,
+.shell.theme-light .disclaimer,.shell.theme-light .modal-head p,
+.shell.theme-light .safe-note,.shell.theme-light .package-cell span,
+.shell.theme-light .package-cell b small,.shell.theme-light .detail-meta small,
+.shell.theme-light .package-version,.shell.theme-light .detail-severity>span,
+.shell.theme-light .table-foot,.shell.theme-light .crumb,.shell.theme-light footer{color:#454f52}
+.shell.theme-light .nav-group>p,.shell.theme-light .panel-head small,
+.shell.theme-light .section-head>div>small,.shell.theme-light .modal-head small,
+.shell.theme-light .detail-top small,.shell.theme-light .detail section>small,
+.shell.theme-light .scan-modal label,.shell.theme-light .status-control{color:#527b16}
+.shell.theme-light .nav-link{color:#303a3d}
+.shell.theme-light .nav-link.active{color:#11170b}
+.shell.theme-light .text-link{color:#41670d}
+.shell.theme-light .metric>small,.shell.theme-light .metric>span{color:#303a27}
+.shell.theme-light .package-cell span,.shell.theme-light .history-info small,
+.shell.theme-light .project-card>p,.shell.theme-light .panel-head p,
+.shell.theme-light .hero p,.shell.theme-light .page-heading p,
+.shell.theme-light .assistant>p,.shell.theme-light .detail section>p,
+.shell.theme-light .disclaimer,.shell.theme-light .assistant-panel small{font-size:12px;line-height:1.55}
+.shell.theme-light .brand small,.shell.theme-light .workspace small,
+.shell.theme-light .user-card small,.shell.theme-light .nav-group>p,
+.shell.theme-light .eyebrow,.shell.theme-light .panel-head small,
+.shell.theme-light .section-head>div>small,.shell.theme-light th,
+.shell.theme-light .table-foot,.shell.theme-light footer,
+.shell.theme-light .severity,.shell.theme-light .api-state,
+.shell.theme-light .theme-toggle,.shell.theme-light .status{font-size:10px}
+.shell.theme-light td,.shell.theme-light .mono,.shell.theme-light .package-cell b,
+.shell.theme-light .history-info b,.shell.theme-light .project-stats b{font-size:12px}
