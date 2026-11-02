@@ -21,5 +21,5 @@ export async function analyzeWithAI({fileName,sourceCode,staticFindings}){
  if(!response.ok)throw new Error("AI provider request failed ("+response.status+"). Check OPENAI_API_KEY and model configuration.");
  const payload=await response.json();const output=payload.output?.flatMap(x=>x.content||[]).find(x=>x.type==="output_text")?.text;
  if(!output)throw new Error("AI provider returned no analysis.");
- const parsed=JSON.parse(output);return {mode:"ai",summary:String(parsed.summary||"AI code review completed."),findings:(Array.isArray(parsed.findings)?parsed.findings:[]).slice(0,20).map((f,i)=>({...f,id:"AI-"+Date.now()+"-"+i,packageName:fileName,version:"source",ecosystem:"source",status:"open",source:"AI CODE REVIEW"}))};
+ const parsed=JSON.parse(output);return {mode:"ai",summary:String(parsed.summary||"AI code review completed."),findings:(Array.isArray(parsed.findings)?parsed.findings:[]).slice(0,20).map((f,i)=>({...f,id:"AI-"+Date.now()+"-"+i,packageName:fileName,version:"source",ecosystem:"source",status:"open",summary:f.explanation||f.evidence||"AI identified a potential security concern.",source:"AI CODE REVIEW"}))};
 }
