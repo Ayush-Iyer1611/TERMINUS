@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const schema=new mongoose.Schema({
+ ownerId:{type:mongoose.Schema.Types.ObjectId,ref:"User",index:true},
  scanId:{type:mongoose.Schema.Types.ObjectId,ref:"Scan"},
  project:{type:String,required:true},packageName:{type:String,required:true},version:{type:String,default:"unknown"},
  ecosystem:{type:String,required:true},id:{type:String,default:""},title:{type:String,required:true},
