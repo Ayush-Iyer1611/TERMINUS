@@ -18,7 +18,9 @@ const fallbackMetrics={projects:8,scans:24,findings:37,critical:3,high:9,medium:
 const colors={CRITICAL:"#ff625b",HIGH:"#ffad62",MEDIUM:"#ead16b",LOW:"#72d9b0"};
 function Severity({value="LOW"}){return <span className={"severity "+value.toLowerCase()}><i/>{value}</span>;}
 function App(){
- const [page,setPage]=useState("Overview"),[metrics,setMetrics]=useState(fallbackMetrics),[findings,setFindings]=useState(seedFindings),[scans,setScans]=useState(seedScans);\n const [theme,setTheme]=useState(()=>localStorage.getItem("terminus-theme")||"dark");\n useEffect(()=>{localStorage.setItem("terminus-theme",theme);},[theme]);
+ const [page,setPage]=useState("Overview"),[metrics,setMetrics]=useState(fallbackMetrics),[findings,setFindings]=useState(seedFindings),[scans,setScans]=useState(seedScans);
+ const [theme,setTheme]=useState(()=>localStorage.getItem("terminus-theme")||"dark");
+ useEffect(()=>{localStorage.setItem("terminus-theme",theme);},[theme]);
  const [apiState,setApiState]=useState("connecting"),[search,setSearch]=useState(""),[severity,setSeverity]=useState("ALL"),[selected,setSelected]=useState(null);
  const [modal,setModal]=useState(false),[busy,setBusy]=useState(false),[toast,setToast]=useState("");
  const [project,setProject]=useState("my-project"),[ecosystem,setEcosystem]=useState("npm"),[filename,setFilename]=useState("package.json");
