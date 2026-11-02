@@ -3,26 +3,18 @@ import mongoose from "mongoose";
 import Scan from "../models/Scan.js";
 import Finding from "../models/Finding.js";
 import {scanManifest} from "../services/scanner.js";
+import {requireAuth} from "../middleware/auth.js";
 const router=Router();
-let demoScans=[
- {_id:"demo-scan-1",projectName:"terminus-web",ecosystem:"npm",status:"completed",findingCount:12,createdAt:new Date().toISOString()},
- {_id:"demo-scan-2",projectName:"analytics-service",ecosystem:"PyPI",status:"completed",findingCount:8,createdAt:new Date(Date.now()-86400000).toISOString()},
- {_id:"demo-scan-3",projectName:"api-gateway",ecosystem:"npm",status:"completed",findingCount:17,createdAt:new Date(Date.now()-172800000).toISOString()}
-];
-let demoFindings=[
- {_id:"demo-1",packageName:"lodash",version:"4.17.20",ecosystem:"npm",id:"DEMO-OSV-001",title:"Prototype pollution in lodash",severity:"CRITICAL",score:9.8,status:"open",project:"terminus-web",fixedVersion:"4.17.21",summary:"Demo advisory for interface review. Confirm the affected range with OSV.",source:"DEMO SAMPLE"},
- {_id:"demo-2",packageName:"axios",version:"0.21.1",ecosystem:"npm",id:"DEMO-OSV-002",title:"Known axios security advisory",severity:"HIGH",score:8.1,status:"open",project:"api-gateway",fixedVersion:"1.6.0",summary:"Demo advisory. Confirm affected version information against the upstream record.",source:"DEMO SAMPLE"},
- {_id:"demo-3",packageName:"Django",version:"3.2.10",ecosystem:"PyPI",id:"CVE-2022-28346",title:"Django security advisory",severity:"HIGH",score:7.5,status:"in-progress",project:"analytics-service",fixedVersion:"3.2.13",summary:"Demo advisory. Validate the version range and supported upgrade path.",source:"DEMO SAMPLE"},
- {_id:"demo-4",packageName:"urllib3",version:"1.26.5",ecosystem:"PyPI",id:"CVE-2021-33503",title:"urllib3 CRLF injection advisory",severity:"MEDIUM",score:6.1,status:"open",project:"analytics-service",fixedVersion:"1.26.6",summary:"Demo advisory. Confirm upstream affected and fixed versions.",source:"DEMO SAMPLE"},
- {_id:"demo-5",packageName:"minimist",version:"1.2.5",ecosystem:"npm",id:"DEMO-OSV-003",title:"Prototype pollution in minimist",severity:"MEDIUM",score:5.6,status:"resolved",project:"terminus-web",fixedVersion:"1.2.6",summary:"Sample record for the interface. Verify with a live source.",source:"DEMO SAMPLE"}
-];
+let demoScans=[];
+let demoFindings=[];
 const dbReady=()=>mongoose.connection.readyState===1;
-router.get("/health",(_req,res)=>res.json({ok:true,service:"terminus-api",database:dbReady()?"connected":"demo-mode",timestamp:new Date().toISOString()}));
+router.get("/health",(_req,res)=>res.json({ok:true,service:"terminus-api",database:dbReady()?"connected":"demo-mode",ai:!!process.env.OPENAI_API_KEY,timestamp:new Date().toISOString()}));
+router.use(requireAuth);
 router.get("/dashboard",async(_req,res,next)=>{try{
  const scans=dbReady()?await Scan.find().sort({createdAt:-1}).limit(100).lean():demoScans;
  const findings=dbReady()?await Finding.find().lean():demoFindings;
  const open=findings.filter(f=>f.status!=="resolved");
- const metrics={projects:new Set(scans.map(s=>s.projectName)).size,scans:scans.length,findings:open.length,critical:open.filter(f=>f.severity==="CRITICAL").length,high:open.filter(f=>f.severity==="HIGH").length,medium:open.filter(f=>f.severity==="MEDIUM").length,low:open.filter(f=>f.severity==="LOW").length,riskScore:Math.max(0,100-open.reduce((n,f)=>n+({CRITICAL:8,HIGH:5,MEDIUM:3,LOW:1}[f.severity]||0),0))};
+ const metrics={projects:new Set(scans.map(s=>s.projectName)).size,scans:scans.length,findings:open.length,critical:open.filter(f=>f.severity==="CRITICAL").length,high:open.filter(f=>f.severity==="HIGH").length,medium:open.filter(f=>f.severity==="MEDIUM").length,low:open.filter(f=>f.severity==="LOW").length,riskScore:open.length?Math.max(0,100-open.reduce((n,f)=>n+({CRITICAL:8,HIGH:5,MEDIUM:3,LOW:1}[f.severity]||0),0)):null};
  res.json({metrics,recentScans:scans.slice(0,8)});
  }catch(e){next(e)}});
 router.get("/scans",async(_req,res,next)=>{try{const scans=dbReady()?await Scan.find().sort({createdAt:-1}).limit(100).lean():demoScans;res.json({scans});}catch(e){next(e)}});
