@@ -4,6 +4,7 @@ api.interceptors.request.use(config=>{const token=localStorage.getItem("terminus
 export const login=data=>api.post("/auth/login",data).then(r=>r.data);
 export const register=data=>api.post("/auth/register",data).then(r=>r.data);
 export const analyzeCode=data=>api.post("/code/analyze",data).then(r=>r.data);
+export const askSecurityAssistant=data=>api.post("/code/ask",data).then(r=>r.data);
 export const getDashboard=()=>api.get("/dashboard").then(r=>r.data);
 export const getScans=()=>api.get("/scans").then(r=>r.data);
 export const getFindings=()=>api.get("/findings").then(r=>r.data);
