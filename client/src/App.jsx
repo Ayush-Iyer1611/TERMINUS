@@ -1,5 +1,5 @@
 import {useEffect,useMemo,useState} from "react";
-import {Activity,AlertTriangle,ArrowDownRight,ArrowUpRight,Bell,Blocks,Bug,Check,ChevronDown,ChevronRight,Clock3,Download,ExternalLink,FileCode2,Filter,Gauge,Github,Layers3,LockKeyhole,Plus,Search,Shield,ShieldAlert,ShieldCheck,Sparkles,Terminal,UploadCloud,X,Zap} from "lucide-react";
+import {Activity,AlertTriangle,ArrowDownRight,ArrowUpRight,Bell,Blocks,Bug,Check,ChevronDown,ChevronRight,Clock3,Download,ExternalLink,FileCode2,Filter,Gauge,Github,Layers3,LockKeyhole,Plus,Search,Shield,ShieldAlert,ShieldCheck,Sparkles,Terminal,UploadCloud,X,Zap,Moon,Sun} from "lucide-react";
 import {createScan,getDashboard,getFindings,getScans,getHealth,updateFinding} from "./lib/api";
 
 const seedFindings=[
@@ -18,7 +18,7 @@ const fallbackMetrics={projects:8,scans:24,findings:37,critical:3,high:9,medium:
 const colors={CRITICAL:"#ff625b",HIGH:"#ffad62",MEDIUM:"#ead16b",LOW:"#72d9b0"};
 function Severity({value="LOW"}){return <span className={"severity "+value.toLowerCase()}><i/>{value}</span>;}
 function App(){
- const [page,setPage]=useState("Overview"),[metrics,setMetrics]=useState(fallbackMetrics),[findings,setFindings]=useState(seedFindings),[scans,setScans]=useState(seedScans);
+ const [page,setPage]=useState("Overview"),[metrics,setMetrics]=useState(fallbackMetrics),[findings,setFindings]=useState(seedFindings),[scans,setScans]=useState(seedScans);\n const [theme,setTheme]=useState(()=>localStorage.getItem("terminus-theme")||"dark");\n useEffect(()=>{localStorage.setItem("terminus-theme",theme);},[theme]);
  const [apiState,setApiState]=useState("connecting"),[search,setSearch]=useState(""),[severity,setSeverity]=useState("ALL"),[selected,setSelected]=useState(null);
  const [modal,setModal]=useState(false),[busy,setBusy]=useState(false),[toast,setToast]=useState("");
  const [project,setProject]=useState("my-project"),[ecosystem,setEcosystem]=useState("npm"),[filename,setFilename]=useState("package.json");
@@ -32,12 +32,12 @@ function App(){
  const changeStatus=async(f,status)=>{try{await updateFinding(f._id,status);setFindings(items=>items.map(item=>item._id===f._id?{...item,status}:item));setSelected(old=>old?{...old,status}:old);notify("Finding status updated");}catch{notify("Status update failed. Check API connection.");}};
  const exportReport=()=>{const data={product:"TERMINUS",generatedAt:new Date().toISOString(),summary:metrics,findings};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="terminus-security-report.json";a.click();URL.revokeObjectURL(url);notify("Report exported");};
  const nav=[{title:"WORKSPACE",links:[["Overview",Gauge],["Projects",Blocks],["Findings",Bug],["Scan history",Activity]]},{title:"INTELLIGENCE",links:[["AI assistant",Sparkles],["Reports",Layers3]]}];
- return <div className="shell">
+ return <div className={"shell theme-"+theme}>
  <aside className="sidebar"><div className="brand"><div className="brand-mark"><Shield size={21}/></div><div><b>TERMINUS<span>®</span></b><small>DEPENDENCY INTELLIGENCE</small></div></div>
  <div className="workspace"><div className="workspace-avatar">A</div><div><b>Ayush's workspace</b><small>Student / Research</small></div><ChevronDown size={14}/></div>
  <nav>{nav.map(group=><div className="nav-group" key={group.title}><p>{group.title}</p>{group.links.map(([label,Icon])=><button key={label} className={"nav-link "+(page===label?"active":"")} onClick={()=>setPage(label)}><Icon size={17}/>{label}{label==="Findings"&&<span className="nav-count">{openFindings.length}</span>}</button>)}</div>)}</nav>
  <div className="sidebar-bottom"><div className="impact-card"><small>✳ IMPACT FRAMEWORK</small><b>Building a safer digital world.</b><div><span>SDG 9</span><span>SDG 10</span><span>SDG 16</span></div></div><div className="user-card"><div className="user-avatar">AI</div><div><b>Ayush Iyer</b><small>Project administrator</small></div><i/></div></div></aside>
- <main className="main"><header className="topbar"><div className="crumb"><span>TERMINUS</span><ChevronRight size={14}/><b>{page}</b></div><div className="top-right"><span className={"api-state "+apiState}><i/>{apiState==="connected"?"API CONNECTED":apiState==="demo"?"DEMO MODE":"CONNECTING"}</span><button className="icon-btn" title="Notifications"><Bell size={17}/></button><div className="mini-avatar">AI</div></div></header>
+ <main className="main"><header className="topbar"><div className="crumb"><span>TERMINUS</span><ChevronRight size={14}/><b>{page}</b></div><div className="top-right"><button className="theme-toggle" onClick={()=>setTheme(theme==="dark"?"light":"dark")} aria-label={"Switch to "+(theme==="dark"?"light":"dark")+" theme"}>{theme==="dark"?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==="dark"?"LIGHT":"DARK"}</span></button><span className={"api-state "+apiState}><i/>{apiState==="connected"?"API CONNECTED":apiState==="demo"?"DEMO MODE":"CONNECTING"}</span><button className="icon-btn" title="Notifications"><Bell size={17}/></button><div className="mini-avatar">AI</div></div></header>
  <div className="content">
  {page==="Overview"&&<><div className="hero"><div><div className="eyebrow"><i/> SECURITY POSTURE / LIVE OVERVIEW</div><h1>Know your dependencies.<br/><em>Own your security.</em></h1><p>A clearer view of your software supply chain. Find risk before it finds you.</p></div><button className="primary" onClick={()=>setModal(true)}><Plus size={17}/> New scan <span>↗</span></button></div>
  <div className="metric-grid"><Metric icon={Blocks} label="PROJECTS MONITORED" value={metrics.projects} note="+2 this month" tone="blue"/><Metric icon={Activity} label="TOTAL SCANS" value={metrics.scans} note="Across all projects" tone="purple"/><Metric icon={ShieldAlert} label="OPEN FINDINGS" value={metrics.findings} note={(metrics.critical||0)+" critical requiring action"} tone="red"/><Metric icon={Gauge} label="SECURITY SCORE" value={(metrics.riskScore??72)+"/100"} note="Risk-weighted posture index" tone="green"/></div>
