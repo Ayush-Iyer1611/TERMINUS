@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const schema=new mongoose.Schema({
+ ownerId:{type:mongoose.Schema.Types.ObjectId,ref:"User",index:true},
  projectName:{type:String,required:true,trim:true,maxlength:100},
  ecosystem:{type:String,enum:["npm","PyPI","source"],required:true},
  fileName:{type:String,default:"manifest"},
