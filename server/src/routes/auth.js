@@ -23,5 +23,5 @@ router.post("/login",async(req,res,next)=>{try{
  if(!user||!await bcrypt.compare(password,user.passwordHash))return res.status(401).json({message:"Email or password is incorrect."});
  res.json({token:issue(user),user:{id:user._id,name:user.name,email:user.email}});
  }catch(e){next(e)}});
-router.get("/me",requireAuth,async(req,res,next)=>{try{const UserModel=(await import("../models/User.js")).default;const user=process.env.MONGODB_URI?await UserModel.findById(req.user.sub).select("name email").lean():[...ephemeralUsers.values()].find(u=>String(u._id)===String(req.user.sub));if(!user)return res.status(401).json({message:"Account not found."});res.json({user:{id:req.user.sub,...user}});}catch(e){next(e)}});
+router.get("/me",requireAuth,async(req,res,next)=>{try{const UserModel=(await import("../models/User.js")).default;const user=process.env.MONGODB_URI?await UserModel.findById(req.user.sub).select("name email").lean():[...ephemeralUsers.values()].find(u=>String(u._id)===String(req.user.sub));if(!user)return res.status(401).json({message:"Account not found."});res.json({user:{id:req.user.sub,name:user.name,email:user.email}});}catch(e){next(e)}});
 export default router;
