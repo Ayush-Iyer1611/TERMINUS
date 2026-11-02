@@ -20,6 +20,10 @@ TERMINUS is a MERN-stack project prototype that helps developers inspect third-p
 - Optional OSV.dev vulnerability lookups.
 - Risk scoring, severity filters, scan history, finding details, status updates, and JSON export.
 - Seeded demo findings for first-launch review.
+- A rule-based explainability panel with remediation guidance; live LLM integration is a planned extension, not enabled in this review build.
+- MongoDB persistence is optional; without a MongoDB URI, scan data lives in server memory and resets when the API restarts.
+
+**Current MVP boundaries:** the profile/workspace is a review UI, not a user account system. Authentication, role-based access control, live LLM calls, CI integration, and repository OAuth are not implemented in this build.
 
 > **Prototype disclaimer:** demo records are clearly labelled. No result from OSV does not guarantee a package is safe. TERMINUS is an aid, not a certification or substitute for a complete security review.
 
@@ -65,7 +69,7 @@ Open the frontend at http://localhost:5173 and API health at http://localhost:50
 
 On Windows PowerShell, use `Copy-Item .env.example .env` instead of `cp`.
 
-Set `MONGODB_URI` in `.env` to enable persistence. Without it, the API uses in-memory demo data.
+Set `MONGODB_URI` in `.env` to enable persistence. Without it, the API uses in-memory demo data. The root `.env` is shared by the Express and Vite workspaces.
 
 ## Environment variables
 
