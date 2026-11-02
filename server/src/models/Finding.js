@@ -5,6 +5,6 @@ const schema=new mongoose.Schema({
  ecosystem:{type:String,required:true},id:{type:String,default:""},title:{type:String,required:true},
  severity:{type:String,enum:["CRITICAL","HIGH","MEDIUM","LOW"],default:"LOW"},score:{type:Number,default:0},
  status:{type:String,enum:["open","in-progress","resolved"],default:"open"},fixedVersion:{type:String,default:""},
- summary:{type:String,default:""},source:{type:String,default:"OSV"}
+ summary:{type:String,default:""},recommendation:{type:String,default:""},line:{type:Number,default:null},evidence:{type:String,default:""},source:{type:String,default:"OSV"}
 },{timestamps:true});
 export default mongoose.model("Finding",schema);
