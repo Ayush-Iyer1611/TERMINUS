@@ -1,8 +1,13 @@
 import axios from "axios";
-const api=axios.create({baseURL:import.meta.env.VITE_API_URL||"http://localhost:5000/api",timeout:20000});
+const api=axios.create({baseURL:import.meta.env.VITE_API_URL||"http://localhost:5000/api",timeout:60000});
+api.interceptors.request.use(config=>{const token=localStorage.getItem("terminus-token");if(token)config.headers.Authorization="Bearer "+token;return config;});
+export const login=data=>api.post("/auth/login",data).then(r=>r.data);
+export const register=data=>api.post("/auth/register",data).then(r=>r.data);
+export const analyzeCode=data=>api.post("/code/analyze",data).then(r=>r.data);
 export const getDashboard=()=>api.get("/dashboard").then(r=>r.data);
 export const getScans=()=>api.get("/scans").then(r=>r.data);
 export const getFindings=()=>api.get("/findings").then(r=>r.data);
 export const createScan=data=>api.post("/scans",data).then(r=>r.data);
 export const updateFinding=(id,status)=>api.patch("/findings/"+id+"/status",{status}).then(r=>r.data);
 export const getHealth=()=>api.get("/health").then(r=>r.data);
+export const logout=()=>{localStorage.removeItem("terminus-token");localStorage.removeItem("terminus-user");};
